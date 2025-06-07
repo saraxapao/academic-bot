@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MentorBot Acadêmico - Sistema de Mentorias</title>
+    <meta name="description" content="Conectando estudantes com mentores especializados para apoio acadêmico">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="book-open" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">MentorBot Acadêmico</h1>
+                        <p class="text-sm text-gray-600">Sistema de Mentorias</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex gap-4">
+                    <a href="#inicio" class="text-gray-600 hover:text-blue-600 transition-colors">Início</a>
+                    <a href="#funcionalidades" class="text-gray-600 hover:text-blue-600 transition-colors">Funcionalidades</a>
+                    <a href="#como-usar" class="text-gray-600 hover:text-blue-600 transition-colors">Como Usar</a>
+                    <a href="#demo" class="text-gray-600 hover:text-blue-600 transition-colors">Demo</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="fade-in-up">
+                <h2 class="text-5xl font-bold text-gray-800 mb-6">
+                    Conectando Estudantes com 
+                    <span class="text-blue-600">Mentores Especializados</span>
+                </h2>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Uma plataforma inteligente que facilita o encontro entre estudantes universitários e mentores qualificados, 
+                    oferecendo suporte acadêmico personalizado através de IA e agendamento simplificado.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                    <button onclick="scrollToDemo()" class="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="play-circle" class="w-5 h-5"></i>
+                        Experimentar Demo
+                    </button>
+                    <button onclick="scrollToSection('funcionalidades')" class="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="info" class="w-5 h-5"></i>
+                        Saiba Mais
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="users" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">50+</div>
+                    <div class="text-gray-600">Mentores Disponíveis</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="calendar" class="w-6 h-6 text-green-600"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">200+</div>
+                    <div class="text-gray-600">Sessões Agendadas</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="star" class="w-6 h-6 text-yellow-600"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">4.8</div>
+                    <div class="text-gray-600">Avaliação Média</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="graduation-cap" class="w-6 h-6 text-purple-600"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">5</div>
+                    <div class="text-gray-600">Cursos Atendidos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="funcionalidades" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Funcionalidades Principais</h3>
+                <p class="text-xl text-gray-600">Tudo que você precisa para uma experiência de mentoria completa</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl card-hover">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="message-circle" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Chatbot Inteligente</h4>
+                    <p class="text-gray-600">IA avançada que entende suas necessidades e encontra o mentor ideal para sua área de estudo.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl card-hover">
+                    <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="search" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Match Personalizado</h4>
+                    <p class="text-gray-600">Sistema de correspondência que conecta você com mentores especializados na sua área de interesse.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-gray-50 p-8 rounded-xl card-hover">
+                    <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="calendar-check" class="w-8 h-8 text-purple-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Agendamento Fácil</h4>
+                    <p class="text-gray-600">Agende sessões de mentoria diretamente pela plataforma com integração ao Google Calendar.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-gray-50 p-8 rounded-xl card-hover">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="star" class="w-8 h-8 text-yellow-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Sistema de Avaliações</h4>
+                    <p class="text-gray-600">Avalie suas experiências e ajude outros estudantes a encontrarem os melhores mentores.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-gray-50 p-8 rounded-xl card-hover">
+                    <div class="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="bar-chart-3" class="w-8 h-8 text-red-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Dashboard Completo</h4>
+                    <p class="text-gray-600">Acompanhe seu progresso acadêmico, notas, mentorias e histórico de conversas.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-gray-50 p-8 rounded-xl card-hover">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="lightbulb" class="w-8 h-8 text-indigo-600"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Dicas de Estudo</h4>
+                    <p class="text-gray-600">Receba dicas personalizadas para melhorar sua produtividade e técnicas de estudo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section id="como-usar" class="py-20 gradient-bg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Como Funciona</h3>
+                <p class="text-xl text-gray-600">Processo simples em 4 passos</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">1</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Converse com o Bot</h4>
+                    <p class="text-gray-600">Descreva sua necessidade acadêmica para o chatbot inteligente</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">2</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Encontre seu Mentor</h4>
+                    <p class="text-gray-600">Receba sugestões de mentores especializados na sua área</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">3</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Agende a Sessão</h4>
+                    <p class="text-gray-600">Escolha o melhor horário e agende sua mentoria</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">4</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Avalie a Experiência</h4>
+                    <p class="text-gray-600">Compartilhe seu feedback e ajude outros estudantes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h3 class="text-4xl font-bold text-gray-800 mb-8">Experimente Agora</h3>
+            <p class="text-xl text-gray-600 mb-12">Acesse a demonstração completa do sistema</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Demo Card 1 -->
+                <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-8 rounded-xl text-white card-hover">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="message-circle" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Chat Inteligente</h4>
+                    <p class="mb-6 opacity-90">Converse com o assistente de IA</p>
+                    <button onclick="openDemo('chat')" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        Experimentar Chat
+                    </button>
+                </div>
+
+                <!-- Demo Card 2 -->
+                <div class="bg-gradient-to-br from-green-500 to-green-600 p-8 rounded-xl text-white card-hover">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="users" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Lista de Professores</h4>
+                    <p class="mb-6 opacity-90">Veja todos os mentores disponíveis</p>
+                    <button onclick="openDemo('professores')" class="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        Ver Professores
+                    </button>
+                </div>
+
+                <!-- Demo Card 3 -->
+                <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-8 rounded-xl text-white card-hover">
+                    <div class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="bar-chart-3" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Dashboard do Aluno</h4>
+                    <p class="mb-6 opacity-90">Acesse dados acadêmicos completos</p>
+                    <button onclick="openDemo('dashboard')" class="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        Ver Dashboard
+                    </button>
+                </div>
+            </div>
+
+            <!-- Matriculas Demo -->
+            <div class="mt-12 p-8 bg-gray-50 rounded-xl">
+                <h4 class="text-2xl font-semibold text-gray-800 mb-4">Matrículas para Demonstração</h4>
+                <p class="text-gray-600 mb-6">Use qualquer uma dessas matrículas para acessar o dashboard:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="bg-white p-4 rounded-lg border">
+                        <div class="font-bold text-blue-600">2021001234</div>
+                        <div class="text-sm text-gray-600">Ana Silva</div>
+                        <div class="text-xs text-gray-500">Eng. Civil</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border">
+                        <div class="font-bold text-blue-600">2022005678</div>
+                        <div class="text-sm text-gray-600">João Santos</div>
+                        <div class="text-xs text-gray-500">Computação</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border">
+                        <div class="font-bold text-blue-600">2020009876</div>
+                        <div class="text-sm text-gray-600">Maria Costa</div>
+                        <div class="text-xs text-gray-500">Administração</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border">
+                        <div class="font-bold text-blue-600">2021003456</div>
+                        <div class="text-sm text-gray-600">Pedro Lima</div>
+                        <div class="text-xs text-gray-500">Química</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border">
+                        <div class="font-bold text-blue-600">2022007890</div>
+                        <div class="text-sm text-gray-600">Beatriz Santos</div>
+                        <div class="text-xs text-gray-500">Matemática</div>
+                    </div>
+                </div>
+                
+                <button onclick="openDemo('matriculas')" class="mt-6 bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    Ver Lista Completa de Matrículas
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="book-open" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold">MentorBot Acadêmico</h4>
+                        </div>
+                    </div>
+                    <p class="text-gray-400">Conectando estudantes com mentores especializados para um futuro acadêmico de sucesso.</p>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Funcionalidades</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Chatbot Inteligente</li>
+                        <li>Agendamento de Mentorias</li>
+                        <li>Dashboard do Estudante</li>
+                        <li>Sistema de Avaliações</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Demonstração</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" onclick="openDemo('chat')" class="hover:text-white transition-colors">Chat com IA</a></li>
+                        <li><a href="#" onclick="openDemo('professores')" class="hover:text-white transition-colors">Lista de Professores</a></li>
+                        <li><a href="#" onclick="openDemo('dashboard')" class="hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="#" onclick="openDemo('matriculas')" class="hover:text-white transition-colors">Matrículas</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 MentorBot Acadêmico. Desenvolvido para demonstração.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollToDemo() {
+            document.getElementById('demo').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Demo navigation functions
+        function openDemo(page) {
+            const baseUrl = window.location.origin;
+            let targetUrl;
+            
+            switch(page) {
+                case 'chat':
+                    targetUrl = baseUrl + '/';
+                    break;
+                case 'professores':
+                    targetUrl = baseUrl + '/agendamento';
+                    break;
+                case 'dashboard':
+                    targetUrl = baseUrl + '/dashboard';
+                    break;
+                case 'matriculas':
+                    targetUrl = baseUrl + '/matriculas';
+                    break;
+                default:
+                    targetUrl = baseUrl + '/';
+            }
+            
+            window.open(targetUrl, '_blank');
+        }
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => observer.observe(card));
+        });
+
+        // Mobile menu toggle (if needed)
+        function toggleMobileMenu() {
+            // Implementation for mobile menu if needed
+        }
+    </script>
+</body>
+</html>
