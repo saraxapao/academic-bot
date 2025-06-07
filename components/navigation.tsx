@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Calendar, MessageCircle, BarChart3 } from "lucide-react"
+import { Calendar, MessageCircle, BarChart3, List } from "lucide-react"
 
 export function Navigation() {
   const pathname = usePathname()
@@ -27,6 +27,12 @@ export function Navigation() {
       label: "Dashboard",
       icon: BarChart3,
       description: "Acompanhe seu progresso acadêmico",
+    },
+    {
+      href: "/matriculas",
+      label: "Matrículas",
+      icon: List,
+      description: "Lista de matrículas para demo",
     },
   ]
 

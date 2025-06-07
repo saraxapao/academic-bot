@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Send, BookOpen, Users, Calendar, Star, MessageCircle } from "lucide-react"
+import { Send, BookOpen, Users, Calendar, Star, MessageCircle, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 
@@ -47,6 +47,12 @@ export default function AcademicMentorshipChatbot() {
             <h1 className="text-3xl font-bold text-gray-800">MentorBot Acadêmico</h1>
           </div>
           <div className="flex justify-center gap-4 mt-4">
+            <Button asChild variant="outline">
+              <Link href="/">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Voltar ao Início
+              </Link>
+            </Button>
             <Button asChild>
               <Link href="/agendamento">
                 <Calendar className="h-4 w-4 mr-2" />

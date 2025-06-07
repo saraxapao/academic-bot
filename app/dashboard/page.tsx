@@ -4,11 +4,11 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Navigation } from "@/components/navigation"
 import {
-  User,
   BookOpen,
   Calendar,
   MessageSquare,
@@ -17,17 +17,140 @@ import {
   Clock,
   CheckCircle,
   GraduationCap,
+  LogIn,
+  Eye,
+  EyeOff,
 } from "lucide-react"
 import { students, getStudentStats, getRecentChatHistory } from "@/lib/demo-data"
 
 export default function DashboardPage() {
-  const [selectedStudentId, setSelectedStudentId] = useState<number>(1)
-  const selectedStudent = students.find((s) => s.id === selectedStudentId)
-  const studentStats = getStudentStats(selectedStudentId)
-  const recentChats = getRecentChatHistory(selectedStudentId)
+  const [registrationNumber, setRegistrationNumber] = useState("")
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [selectedStudent, setSelectedStudent] = useState<any>(null)
+  const [showMatriculas, setShowMatriculas] = useState(false)
+  const [error, setError] = useState("")
 
-  if (!selectedStudent || !studentStats) {
-    return <div>Estudante não encontrado</div>
+  const handleLogin = () => {
+    const student = students.find((s) => s.registrationNumber === registrationNumber)
+
+    if (student) {
+      setSelectedStudent(student)
+      setIsLoggedIn(true)
+      setError("")
+    } else {
+      setError("Matrícula não encontrada. Verifique o número e tente novamente.")
+    }
+  }
+
+  const handleLogout = () => {
+    setIsLoggedIn(false)
+    setSelectedStudent(null)
+    setRegistrationNumber("")
+    setError("")
+  }
+
+  // Lista de matrículas disponíveis para demonstração
+  const availableRegistrations = students.map((student) => ({
+    registration: student.registrationNumber,
+    name: student.name,
+    course: student.course,
+  }))
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+        <div className="max-w-md mx-auto mt-20">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Acesso ao Dashboard</h1>
+            <p className="text-gray-600">Digite sua matrícula para acessar seus dados acadêmicos</p>
+          </div>
+
+          {/* Login Form */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <LogIn className="h-5 w-5" />
+                Login do Estudante
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label htmlFor="registration" className="block text-sm font-medium text-gray-700 mb-1">
+                  Número de Matrícula
+                </label>
+                <Input
+                  id="registration"
+                  type="text"
+                  placeholder="Ex: 2021001234"
+                  value={registrationNumber}
+                  onChange={(e) => setRegistrationNumber(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleLogin()}
+                />
+              </div>
+
+              {error && <div className="text-red-600 text-sm bg-red-50 p-2 rounded">{error}</div>}
+
+              <Button onClick={handleLogin} className="w-full" disabled={!registrationNumber.trim()}>
+                <LogIn className="h-4 w-4 mr-2" />
+                Acessar Dashboard
+              </Button>
+
+              {/* Demo Matriculas */}
+              <div className="mt-6">
+                <Button variant="outline" onClick={() => setShowMatriculas(!showMatriculas)} className="w-full">
+                  {showMatriculas ? <EyeOff className="h-4 w-4 mr-2" /> : <Eye className="h-4 w-4 mr-2" />}
+                  {showMatriculas ? "Ocultar" : "Ver"} Matrículas de Demonstração
+                </Button>
+
+                {showMatriculas && (
+                  <Card className="mt-4">
+                    <CardHeader>
+                      <CardTitle className="text-lg">Matrículas Disponíveis para Demo</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {availableRegistrations.map((student, index) => (
+                          <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div>
+                              <div className="font-medium text-blue-600">{student.registration}</div>
+                              <div className="text-sm text-gray-600">{student.name}</div>
+                              <div className="text-xs text-gray-500">{student.course}</div>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                setRegistrationNumber(student.registration)
+                                setShowMatriculas(false)
+                              }}
+                            >
+                              Usar
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Navigation back */}
+          <div className="mt-6">
+            <Navigation />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const studentStats = getStudentStats(selectedStudent.id)
+  const recentChats = getRecentChatHistory(selectedStudent.id)
+
+  if (!studentStats) {
+    return <div>Erro ao carregar dados do estudante</div>
   }
 
   const getGradeColor = (grade: number) => {
@@ -60,32 +183,13 @@ export default function DashboardPage() {
         {/* Navigation */}
         <Navigation />
 
-        {/* Student Selector */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-4">
-              <User className="h-5 w-5 text-blue-600" />
-              <div className="flex-1">
-                <label className="text-sm font-medium text-gray-700">Selecionar Estudante:</label>
-                <Select
-                  value={selectedStudentId.toString()}
-                  onValueChange={(value) => setSelectedStudentId(Number(value))}
-                >
-                  <SelectTrigger className="mt-1">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {students.map((student) => (
-                      <SelectItem key={student.id} value={student.id.toString()}>
-                        {student.name} - {student.course}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Logout Button */}
+        <div className="flex justify-end mb-6">
+          <Button variant="outline" onClick={handleLogout}>
+            <LogIn className="h-4 w-4 mr-2" />
+            Sair
+          </Button>
+        </div>
 
         {/* Student Profile */}
         <Card className="mb-6">
